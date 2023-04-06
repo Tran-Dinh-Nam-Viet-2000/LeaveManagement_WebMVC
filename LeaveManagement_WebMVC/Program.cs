@@ -1,4 +1,6 @@
 using LeaveManagement_WebMVC.Data;
+using LeaveManagement_WebMVC.Services;
+using LeaveManagement_WebMVC.Services.IServices;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,7 +15,7 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<Employee>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
-
+builder.Services.AddScoped<ILeaveTypeService, LeaveTypeService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
