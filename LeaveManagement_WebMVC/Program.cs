@@ -1,3 +1,4 @@
+using LeaveManagement_WebMVC.Configuration;
 using LeaveManagement_WebMVC.Data;
 using LeaveManagement_WebMVC.Services;
 using LeaveManagement_WebMVC.Services.IServices;
@@ -11,6 +12,9 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
+//Add AutoMapper
+builder.Services.AddAutoMapper(typeof(MapperConfig));
 
 builder.Services.AddDefaultIdentity<Employee>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();

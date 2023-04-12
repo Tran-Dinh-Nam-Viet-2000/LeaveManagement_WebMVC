@@ -1,14 +1,14 @@
 ﻿using LeaveManagement_WebMVC.Data;
-using LeaveManagement_WebMVC.Models;
+using LeaveManagement_WebMVC.Models.LeaveType;
 
 namespace LeaveManagement_WebMVC.Services.IServices
 {
     public interface ILeaveTypeService
     {
-        Task<IEnumerable<LeaveType>> GetAll();
+        Task<IEnumerable<LeaveTypeModel>> GetAll();
         Task<LeaveType> Details(int? id);
-        Task<LeaveType> Create(LeaveTypeModel leaveTypeModel);
-        Task<LeaveType> Update(int? id, LeaveTypeModel leaveTypeModel);
+        void Create(LeaveType leaveType);
+        void Update(int id, UpdateLeaveTypeModel updateLeaveType);
         void Delete(int id);
     }
 }

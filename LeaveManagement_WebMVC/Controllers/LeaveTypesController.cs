@@ -1,5 +1,6 @@
-﻿using LeaveManagement_WebMVC.Data;
-using LeaveManagement_WebMVC.Models;
+﻿using AutoMapper;
+using LeaveManagement_WebMVC.Data;
+using LeaveManagement_WebMVC.Models.LeaveType;
 using LeaveManagement_WebMVC.Services.IServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,11 +12,13 @@ namespace LeaveManagement_WebMVC.Controllers
     {
         private readonly ApplicationDbContext _dbContext;
         private readonly ILeaveTypeService _leaveTypeService;
+        private readonly IMapper _mapper;
 
-        public LeaveTypesController(ApplicationDbContext dbContext, ILeaveTypeService leaveTypeService)
+        public LeaveTypesController(ApplicationDbContext dbContext, ILeaveTypeService leaveTypeService, IMapper mapper)
         {
             _dbContext = dbContext;
             _leaveTypeService = leaveTypeService;
+            _mapper = mapper;
         }
 
         public async Task<IActionResult> Index()
@@ -41,14 +44,15 @@ namespace LeaveManagement_WebMVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(LeaveTypeModel leaveTypeModel)
+        public IActionResult Create(LeaveType leaveType)
         {
-            var create = await _leaveTypeService.Create(leaveTypeModel);
+            var scope = _mapper.Map<LeaveType>(leaveType);
+            _leaveTypeService.Create(leaveType);
             if (ModelState.IsValid)
             {
                 return RedirectToAction("Index");
             }
-            return View(create);
+            return View(scope);
         }
 
         public IActionResult Update(int? id)
@@ -62,14 +66,15 @@ namespace LeaveManagement_WebMVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Update(int? id, LeaveTypeModel leaveTypeModel)
+        public IActionResult Update(int id, UpdateLeaveTypeModel updateLeaveType)
         {
-            var update = await _leaveTypeService.Update(id, leaveTypeModel);
+            var mapping = _mapper.Map<UpdateLeaveTypeModel, LeaveType>(updateLeaveType);
+            _leaveTypeService.Update(id, updateLeaveType);
             if (ModelState.IsValid)
             {
                 return RedirectToAction("Index");
             }
-            return View(update);
+            return View(mapping);
         }
 
         public IActionResult Delete(int? id)
