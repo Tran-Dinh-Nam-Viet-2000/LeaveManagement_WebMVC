@@ -14,9 +14,8 @@ namespace LeaveManagement_WebMVC.Configuration
         private void CreateMappingForLeaveType()
         {
             CreateMap<LeaveType, LeaveTypeModel>();
-            CreateMap<LeaveType, UpdateLeaveTypeModel>();
+            CreateMap<CreateLeaveTypeModel, LeaveType>();
             CreateMap<UpdateLeaveTypeModel, LeaveType>();
-
         }
     }
 }

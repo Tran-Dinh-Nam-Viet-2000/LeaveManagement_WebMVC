@@ -7,7 +7,7 @@ namespace LeaveManagement_WebMVC.Services.IServices
     {
         Task<IEnumerable<LeaveTypeModel>> GetAll();
         Task<LeaveType> Details(int? id);
-        void Create(LeaveType leaveType);
+        void Create(CreateLeaveTypeModel createLeaveTypeModel);
         void Update(int id, UpdateLeaveTypeModel updateLeaveType);
         void Delete(int id);
     }

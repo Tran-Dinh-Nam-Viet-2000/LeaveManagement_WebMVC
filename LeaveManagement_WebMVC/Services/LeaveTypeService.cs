@@ -37,17 +37,20 @@ namespace LeaveManagement_WebMVC.Services
             return query;
         }
 
-        public void Create(LeaveType leaveType)
+        public void Create(CreateLeaveTypeModel createLeaveTypeModel)
         {
-            var create = _mapper.Map<LeaveType>(leaveType);
+            //Dùng mapper để convert CreateLeaveTypeModel sang LeaveType, createLeaveTypeModel là object
+            //Map<Chuyển về kiểu gì>(đối tượng chuyển)
+            var create = _mapper.Map<LeaveType>(createLeaveTypeModel);
+            create.DateCreated = DateTime.Now;
             _dbContext.LeaveTypes.Add(create);
             _dbContext.SaveChanges();
         }
 
         public void Update(int id, UpdateLeaveTypeModel updateLeaveType)
         {
-            var update = _mapper.Map<UpdateLeaveTypeModel, LeaveType>(updateLeaveType);
-
+            var update = _mapper.Map<LeaveType>(updateLeaveType);
+            update.DateModified = DateTime.Now;
             _dbContext.Update(update);
             _dbContext.SaveChanges();;
         }

@@ -1,12 +1,11 @@
-﻿@using LeaveManagement_WebMVC.Models.LeaveType;
-@model UpdateLeaveTypeModel
+﻿@model LeaveType
 
 @{
     ViewData["Title"] = "Update";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Update Leave Type</h1>
+<h1>Update of @Model.Name</h1>
 
 <hr />
 <div class="row">
@@ -22,11 +21,6 @@
                 <label asp-for="DefaultDays" class="control-label"></label>
                 <input asp-for="DefaultDays" class="form-control" />
                 <span asp-validation-for="DefaultDays" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DateModified" class="control-label"></label>
-                <input asp-for="DateModified" class="form-control" />
-                <span asp-validation-for="DateModified" class="text-danger"></span>
             </div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group" style="margin-top:20px">

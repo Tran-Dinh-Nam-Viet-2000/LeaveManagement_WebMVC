@@ -4,7 +4,6 @@ using LeaveManagement_WebMVC.Models.LeaveType;
 using LeaveManagement_WebMVC.Services.IServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace LeaveManagement_WebMVC.Controllers
 {
@@ -44,10 +43,10 @@ namespace LeaveManagement_WebMVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(LeaveType leaveType)
+        public IActionResult Create(CreateLeaveTypeModel createLeaveTypeModel)
         {
-            var scope = _mapper.Map<LeaveType>(leaveType);
-            _leaveTypeService.Create(leaveType);
+            var scope = _mapper.Map<LeaveType>(createLeaveTypeModel);
+            _leaveTypeService.Create(createLeaveTypeModel);
             if (ModelState.IsValid)
             {
                 return RedirectToAction("Index");
@@ -55,20 +54,21 @@ namespace LeaveManagement_WebMVC.Controllers
             return View(scope);
         }
 
-        public IActionResult Update(int? id)
+        public async Task<IActionResult> Update(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-            return View();
+            var query = await _dbContext.LeaveTypes.FirstOrDefaultAsync(n => n.Id == id);
+            return View(query);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Update(int id, UpdateLeaveTypeModel updateLeaveType)
         {
-            var mapping = _mapper.Map<UpdateLeaveTypeModel, LeaveType>(updateLeaveType);
+            var mapping = _mapper.Map<LeaveType>(updateLeaveType);
             _leaveTypeService.Update(id, updateLeaveType);
             if (ModelState.IsValid)
             {
