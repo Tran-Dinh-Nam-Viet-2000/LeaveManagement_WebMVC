@@ -88,7 +88,8 @@ namespace LeaveManagement_WebMVC.Controllers
             return View(query);
         }
 
-        [HttpPost]
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
         public IActionResult Delete(int id)
         {
             _leaveTypeService.Delete(id);
