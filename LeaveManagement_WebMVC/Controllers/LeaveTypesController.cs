@@ -26,7 +26,7 @@ namespace LeaveManagement_WebMVC.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int id)
         {
             var query = await _leaveTypeService.Details(id);
             if (query == null)

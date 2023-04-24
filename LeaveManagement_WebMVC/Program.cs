@@ -1,4 +1,5 @@
 using LeaveManagement_WebMVC.Configuration;
+using LeaveManagement_WebMVC.Contracts;
 using LeaveManagement_WebMVC.Data;
 using LeaveManagement_WebMVC.Services;
 using LeaveManagement_WebMVC.Services.IServices;
@@ -19,6 +20,7 @@ builder.Services.AddAutoMapper(typeof(MapperConfig));
 builder.Services.AddDefaultIdentity<Employee>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped(typeof(IRepositories<>), typeof(Repositories<>));
 builder.Services.AddScoped<ILeaveTypeService, LeaveTypeService>();
 var app = builder.Build();
 
